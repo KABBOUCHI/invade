@@ -1,0 +1,19 @@
+[package]
+name = "invade_derive"
+version = "0.0.1"
+edition = "2021"
+authors = ["Georges KABBOUCHI <georges.kabbouchi@gmail.com>"]
+keywords = ["reflection", "invade"]
+license = "MIT OR Apache-2.0"
+readme = "../README.md"
+repository = "https://github.com/KABBOUCHI/invade"
+description = "A library to reflect on Rust types and generate code"
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+proc-macro = true
+
+[dependencies]
+syn = { version = "2.0", features = ["full"] }
+proc-macro2 = "1.0"
+quote = "1.0"
