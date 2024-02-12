@@ -1,6 +1,6 @@
 use invade::Invade;
 
-#[derive(Invade)]
+#[derive(Debug, Invade)]
 struct Counter {
     count: u32,
 }
@@ -22,7 +22,7 @@ fn main() {
 
     println!("count: {:?}", counter.invade_get::<u32>("count"));
 
-    // counter.invade().call("inc", ());
+    counter.invade_call("inc");
 
     println!("count: {}", counter.count);
 }

@@ -4,14 +4,14 @@ version = 3
 
 [[package]]
 name = "invade"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "invade_derive",
 ]
 
 [[package]]
 name = "invade_derive"
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
  "proc-macro2",
  "quote",

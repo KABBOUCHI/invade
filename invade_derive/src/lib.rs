@@ -28,7 +28,15 @@ fn impl_invade(input: &syn::DeriveInput) -> TokenStream {
                                 }
                             }),
                         }
-                    ]
+                    ],
+                    vec![
+                        invade::Method {
+                            name: "inc".to_string(),
+                            ptr: Some(|s, _| {
+                                s.inc();
+                            }),
+                        }
+                    ],
                 )
             }
 
@@ -38,6 +46,10 @@ fn impl_invade(input: &syn::DeriveInput) -> TokenStream {
 
             pub fn invade_set<T: std::any::Any + Send + Sync + Clone>(&mut self, field: &str, value: T) {
                 self.invade().set(field, value);
+            }
+
+            pub fn invade_call(&mut self, method: &str) {
+                self.invade().call(method);
             }
         }
     };
