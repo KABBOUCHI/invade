@@ -9,13 +9,14 @@ cargo add invade
 ## Usage
 
 ```rust
-use invade::Invade;
+use invade::invade;
 
-#[derive(Invade)]
+#[invade]
 struct Counter {
     count: u32,
 }
 
+#[invade]
 impl Counter {
     fn inc(&mut self) {
         self.count += 1;
@@ -31,7 +32,7 @@ fn main() {
 
     assert_eq!(counter.count, 1);
 
-    counter.invade_call("inc");
+    counter.invade_call("inc", vec![]);
 
     assert_eq!(counter.count, 2);
 }
