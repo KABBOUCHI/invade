@@ -9,6 +9,13 @@ struct Counter {
 
 #[invade]
 impl Counter {
+    fn new() -> Counter {
+        Counter {
+            count: 69,
+            title: "Counter".to_string(),
+        }
+    }
+
     pub fn inc(&mut self) {
         self.count += 1;
     }
@@ -23,10 +30,7 @@ impl Counter {
 }
 
 fn main() {
-    let mut counter = Counter {
-        count: 69,
-        title: "Counter".to_string(),
-    };
+    let mut counter = Counter::new();
 
     println!("count: {:?}", counter.invade().get::<u32>("count"));
     println!("count: {:?}", counter.invade_get::<u32>("count"));

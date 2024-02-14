@@ -14,6 +14,7 @@ fn impl_invade(
             if let syn::ImplItem::Fn(method) = item {
                 let method_name = method.sig.ident;
                 let mut args = proc_macro2::TokenStream::new();
+                let mut is_receiver = false;
 
                 for input in method.sig.inputs {
                     if let syn::FnArg::Typed(pat_type) = input {
@@ -24,10 +25,14 @@ fn impl_invade(
                         );
 
                         args.extend(token);
+                    } else if let syn::FnArg::Receiver(_) = input {
+                        is_receiver = true;
                     }
                 }
 
-                println!("args: {:?}", args.to_string());
+                if !is_receiver {
+                    continue;
+                }
 
                 let token = quote!(
                     invade::Method {
