@@ -16,6 +16,10 @@ impl Counter {
     pub fn dec(&mut self) {
         self.count -= 1;
     }
+
+    pub fn inc_by(&mut self, n: u32) {
+        self.count += n;
+    }
 }
 
 fn main() {
@@ -36,10 +40,9 @@ fn main() {
     counter.invade_call("inc", vec![]);
     counter.invade_call("dec", vec![]);
     counter.invade_call("inc", vec![]);
+    counter.invade_call("inc_by", vec![Box::new(5_u32)]);
 
     println!("count: {}", counter.count);
 
     println!("title: {:?}", counter.invade_get::<String>("title"));
-
-    // println!("methods: {:?}", counter.invaded_methods());
 }

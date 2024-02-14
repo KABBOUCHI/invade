@@ -13,11 +13,29 @@ fn impl_invade(
         for item in input.items {
             if let syn::ImplItem::Fn(method) = item {
                 let method_name = method.sig.ident;
+                let mut args = proc_macro2::TokenStream::new();
+
+                for input in method.sig.inputs {
+                    if let syn::FnArg::Typed(pat_type) = input {
+                        let ty = pat_type.ty;
+
+                        let token = quote!(
+                            *args.remove(0).downcast::<#ty>().unwrap(),
+                        );
+
+                        args.extend(token);
+                    }
+                }
+
+                println!("args: {:?}", args.to_string());
+
                 let token = quote!(
                     invade::Method {
                         name: stringify!(#method_name).to_string(),
-                        ptr: Some(|s, _| {
-                            s.#method_name();
+                        ptr: Some(|s, mut args| {
+                            s.#method_name(
+                               #args
+                            );
                         }),
                     },
                 );
@@ -75,12 +93,6 @@ fn impl_invade(
 
     let gen = quote! {
         #orig_item
-
-        // impl<'a> invade::InvadedMethods<'a, &'a mut Counter> for &'a mut Counter {
-        //     fn invaded_methods(&self) -> Vec<invade::Method<'a, &'a mut Counter>> {
-        //         vec![]
-        //     }
-        // }
 
         impl #name {
             fn invade(&mut self) -> invade::Invaded<&mut Self> {
